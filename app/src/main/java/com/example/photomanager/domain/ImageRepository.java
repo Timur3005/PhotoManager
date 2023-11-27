@@ -8,4 +8,5 @@ public interface ImageRepository {
 
     LiveData<List<ImageItem>> getImages();
     LiveData<ImageItem> getImageItem();
+    void insertImage(ImageItem imageItem);
 }
