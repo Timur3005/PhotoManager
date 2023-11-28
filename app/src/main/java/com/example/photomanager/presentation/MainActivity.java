@@ -1,4 +1,4 @@
-package com.example.photomanager;
+package com.example.photomanager.presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 

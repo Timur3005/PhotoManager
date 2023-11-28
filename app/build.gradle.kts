@@ -36,6 +36,9 @@ android {
 
 dependencies {
 
+    implementation("androidx.navigation:navigation-fragment:2.7.5")
+    implementation("androidx.navigation:navigation-ui:2.7.5")
+
     implementation("androidx.room:room-rxjava3:2.6.0")
 
     implementation ("io.reactivex.rxjava3:rxjava:3.1.8")
