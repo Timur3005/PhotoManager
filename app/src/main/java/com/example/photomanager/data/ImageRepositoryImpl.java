@@ -30,15 +30,15 @@ public class ImageRepositoryImpl implements ImageRepository {
     @Override
     public LiveData<List<ImageItem>> getImages() {
         return Transformations.map(
-                new MutableLiveData<>(),
+                dao.getImageItemList(),
                 mapper::mapListImageDbModelToListImageItem
         );
     }
 
     @Override
-    public LiveData<ImageItem> getImageItem() {
+    public LiveData<ImageItem> getImageItem(int id) {
         return Transformations.map(
-                new MutableLiveData<>(),
+                dao.getImageItemById(id),
                 mapper::mapImageDbModelToImageItem
         );
     }

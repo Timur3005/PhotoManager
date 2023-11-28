@@ -1,4 +1,4 @@
-package com.example.photomanager.presentation;
+package com.example.photomanager.presentation.imageslist;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -15,7 +15,7 @@ import javax.inject.Inject;
 
 public class ImageItemAdapter extends ListAdapter<ImageItem, ImageItemViewHolder> {
     @Inject
-    ImageItemAdapter() {
+    public ImageItemAdapter() {
         super(new DiffUtil.ItemCallback<ImageItem>() {
             @Override
             public boolean areItemsTheSame(@NonNull ImageItem oldItem, @NonNull ImageItem newItem) {

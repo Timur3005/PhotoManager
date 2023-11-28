@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/imageItemFragment"
-        android:name="com.example.photomanager.presentation.ImageItemFragment"
+        android:name="com.example.photomanager.presentation.imageitem.ImageItemFragment"
         android:label="fragment_image_item"
         tools:layout="@layout/fragment_image_item" />
     <fragment
         android:id="@+id/imagesListFragment"
-        android:name="com.example.photomanager.presentation.ImagesListFragment"
+        android:name="com.example.photomanager.presentation.imageslist.ImagesListFragment"
         android:label="fragment_images_list"
         tools:layout="@layout/fragment_images_list" >
         <action
