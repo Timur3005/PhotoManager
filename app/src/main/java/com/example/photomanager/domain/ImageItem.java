@@ -1,5 +1,7 @@
 package com.example.photomanager.domain;
 
+import androidx.annotation.Nullable;
+
 public class ImageItem {
     public int id;
     public String name;
@@ -11,5 +13,10 @@ public class ImageItem {
         this.name = name;
         this.description = description;
         this.photoPath = photoPath;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        return this == obj;
     }
 }
