@@ -35,6 +35,15 @@ android {
 }
 
 dependencies {
+
+    implementation("androidx.room:room-rxjava3:2.6.0")
+
+    implementation ("io.reactivex.rxjava3:rxjava:3.1.8")
+    implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
+
+    implementation("androidx.room:room-runtime:2.6.0")
+    annotationProcessor("androidx.room:room-compiler:2.6.0")
+
     implementation ("com.google.dagger:dagger:2.48.1")
     annotationProcessor ("com.google.dagger:dagger-compiler:2.48.1")
 
