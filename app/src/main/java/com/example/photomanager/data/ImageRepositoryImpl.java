@@ -50,4 +50,14 @@ public class ImageRepositoryImpl implements ImageRepository {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe();
     }
+
+    @Override
+    public void deleteImageItem(ImageItem imageItem) {
+        dao.deleteImageItem(mapper.mapImageItemToImageItemDbModel(imageItem))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
+
+
 }

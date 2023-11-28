@@ -13,7 +13,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,6 +66,7 @@ public class ImagesListFragment extends Fragment {
         viewModel.getImages().observe(getViewLifecycleOwner(), imageItems -> {
             adapter.submitList(imageItems);
         });
+        setupSwipeListenerForImageItems(binding.imageItemsRecycler);
     }
 
     private void navigateToImageItemFragment(){
@@ -73,6 +76,27 @@ public class ImagesListFragment extends Fragment {
     private void setupRecycler(){
         binding.imageItemsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.imageItemsRecycler.setAdapter(adapter);
+    }
+
+    private void setupSwipeListenerForImageItems(RecyclerView recyclerView){
+        ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(
+                0,
+                ItemTouchHelper.LEFT
+        ) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                ImageItem imageItem = adapter.getCurrentList().get(viewHolder.getBindingAdapterPosition());
+                viewModel.deleteImageItem(imageItem);
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
 }
