@@ -68,7 +68,7 @@ public class ImageItemFragment extends Fragment {
                             binding.nameOfImage.getText().toString(),
                             binding.descriptionOfImage.getText().toString(),
                             photoUri.toString()));
-                    Navigation.findNavController(requireView()).popBackStack();
+                    popUpToBackStack();
                 });
                 break;
             default:
@@ -83,12 +83,16 @@ public class ImageItemFragment extends Fragment {
                                 binding.descriptionOfImage.getText().toString(),
                                 imageItem.photoPath
                         ));
-                        Navigation.findNavController(requireView()).popBackStack();
+                        popUpToBackStack();
                     });
                 });
                 break;
         }
         moveToPreviousFragment();
+    }
+
+    private void popUpToBackStack() {
+        Navigation.findNavController(requireView()).popBackStack();
     }
 
     private void chosePhoto() {
@@ -99,7 +103,7 @@ public class ImageItemFragment extends Fragment {
                         Glide.with(this).load(photoUri).into(binding.image);
                     }
                     else{
-                        Navigation.findNavController(requireView()).popBackStack();
+                        popUpToBackStack();
                     }
                 });
         pickMedia.launch(new PickVisualMediaRequest.Builder()
@@ -111,7 +115,7 @@ public class ImageItemFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                Navigation.findNavController(requireView()).popBackStack();
+                popUpToBackStack();
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
