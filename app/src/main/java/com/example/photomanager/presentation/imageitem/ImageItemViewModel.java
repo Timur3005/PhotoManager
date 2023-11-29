@@ -1,29 +1,31 @@
 package com.example.photomanager.presentation.imageitem;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.photomanager.domain.ImageItem;
-import com.example.photomanager.domain.ImageRepository;
+import com.example.photomanager.domain.usecases.AddImageUseCase;
+import com.example.photomanager.domain.usecases.GetImageItemUseCase;
 
 import javax.inject.Inject;
 
 public class ImageItemViewModel extends ViewModel {
 
-    private ImageRepository repository;
+    private final AddImageUseCase addImageUseCase;
+    private final GetImageItemUseCase getImageItemUseCase;
+
     @Inject
-    public ImageItemViewModel(ImageRepository repository) {
-        this.repository = repository;
+    public ImageItemViewModel(AddImageUseCase addImageUseCase, GetImageItemUseCase getImageItemUseCase) {
+        this.addImageUseCase = addImageUseCase;
+        this.getImageItemUseCase = getImageItemUseCase;
     }
 
-    private MutableLiveData<ImageItem> imageItem = new MutableLiveData<>();
 
-    public LiveData<ImageItem> getImageItem(){
-        return imageItem;
+    public LiveData<ImageItem> getImageItem(int id){
+        return getImageItemUseCase.getImageItem(id);
     }
 
     void insertImageItem(ImageItem imageItem){
-        repository.insertImage(imageItem);
+        addImageUseCase.addItem(imageItem);
     }
 }

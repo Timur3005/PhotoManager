@@ -12,11 +12,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDestination;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,14 +36,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class ImagesListFragment extends Fragment {
+public class ImagesListFragment extends Fragment implements ImageItemAdapter.OnImageItemClick {
 
     private ImagesListViewModel viewModel;
 
     @Inject
     public ViewModelFactory viewModelFactory;
-    @Inject
-    public ImageItemAdapter adapter;
+    private ImageItemAdapter adapter;
 
     private FragmentImagesListBinding binding;
 
@@ -70,10 +72,12 @@ public class ImagesListFragment extends Fragment {
     }
 
     private void navigateToImageItemFragment(){
-        Navigation.findNavController(requireView()).navigate(R.id.action_imagesListFragment_to_imageItemFragment);
+        Navigation.findNavController(requireView()).
+                navigate(ImagesListFragmentDirections.actionImagesListFragmentToImageItemFragment());
     }
 
     private void setupRecycler(){
+        adapter = new ImageItemAdapter(this);
         binding.imageItemsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.imageItemsRecycler.setAdapter(adapter);
     }
@@ -84,13 +88,16 @@ public class ImagesListFragment extends Fragment {
                 ItemTouchHelper.LEFT
         ) {
             @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            public boolean onMove(@NonNull RecyclerView recyclerView,
+                                  @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder target) {
                 return false;
             }
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                ImageItem imageItem = adapter.getCurrentList().get(viewHolder.getBindingAdapterPosition());
+                ImageItem imageItem = adapter.getCurrentList()
+                        .get(viewHolder.getBindingAdapterPosition());
                 viewModel.deleteImageItem(imageItem);
             }
         };
@@ -99,4 +106,13 @@ public class ImagesListFragment extends Fragment {
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
+    @Override
+    public void onClick(ImageItem imageItem) {
+        Navigation.findNavController(getView())
+                .navigate(
+                        ImagesListFragmentDirections
+                                .actionImagesListFragmentToImageItemFragment()
+                                .setImageId(imageItem.id)
+                );
+    }
 }

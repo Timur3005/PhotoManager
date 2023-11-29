@@ -9,7 +9,12 @@
         android:id="@+id/imageItemFragment"
         android:name="com.example.photomanager.presentation.imageitem.ImageItemFragment"
         android:label="fragment_image_item"
-        tools:layout="@layout/fragment_image_item" />
+        tools:layout="@layout/fragment_image_item" >
+        <argument
+            android:name="image_id"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
     <fragment
         android:id="@+id/imagesListFragment"
         android:name="com.example.photomanager.presentation.imageslist.ImagesListFragment"

@@ -14,8 +14,10 @@ import com.example.photomanager.domain.ImageItem;
 import javax.inject.Inject;
 
 public class ImageItemAdapter extends ListAdapter<ImageItem, ImageItemViewHolder> {
+
+    private OnImageItemClick listener;
     @Inject
-    public ImageItemAdapter() {
+    public ImageItemAdapter(OnImageItemClick listener) {
         super(new DiffUtil.ItemCallback<ImageItem>() {
             @Override
             public boolean areItemsTheSame(@NonNull ImageItem oldItem, @NonNull ImageItem newItem) {
@@ -27,6 +29,7 @@ public class ImageItemAdapter extends ListAdapter<ImageItem, ImageItemViewHolder
                 return oldItem.equals(newItem);
             }
         });
+        this.listener = listener;
     }
 
     @NonNull
@@ -44,5 +47,11 @@ public class ImageItemAdapter extends ListAdapter<ImageItem, ImageItemViewHolder
         ImageItem imageItem = getItem(position);
         Glide.with(binding.getRoot().getContext()).load(imageItem.photoPath).into(binding.image);
         binding.name.setText(imageItem.name);
+        binding.getRoot().setOnClickListener(view ->
+                listener.onClick(imageItem));
+    }
+
+    public interface OnImageItemClick{
+        void onClick(ImageItem imageItem);
     }
 }

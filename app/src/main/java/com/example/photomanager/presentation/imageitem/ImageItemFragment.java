@@ -29,8 +29,8 @@ public class ImageItemFragment extends Fragment {
 
     private FragmentImageItemBinding binding;
     private Uri photoUri;
-
     private ImageItemViewModel viewModel;
+    private int fragmentMode;
 
     @Inject
     public ViewModelFactory viewModelFactory;
@@ -39,6 +39,12 @@ public class ImageItemFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         ((PhotoManagerApp)getActivity().getApplication()).component.inject(this);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        fragmentMode = ImageItemFragmentArgs.fromBundle(getArguments()).getImageId();
     }
 
     @Override
@@ -53,13 +59,32 @@ public class ImageItemFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this, viewModelFactory)
                 .get(ImageItemViewModel.class);
-        chosePhoto();
-        binding.save.setOnClickListener(view1 -> {
-            viewModel.insertImageItem(new ImageItem(
-                    binding.nameOfImage.getText().toString(),
-                    binding.descriptionOfImage.getText().toString(),
-                    photoUri.toString()));
-        });
+        switch (fragmentMode){
+            case ADDING_MODE:
+                chosePhoto();
+                binding.save.setOnClickListener(view1 -> {
+                    viewModel.insertImageItem(new ImageItem(
+                            binding.nameOfImage.getText().toString(),
+                            binding.descriptionOfImage.getText().toString(),
+                            photoUri.toString()));
+                });
+                break;
+            default:
+                viewModel.getImageItem(fragmentMode).observe(getViewLifecycleOwner(), imageItem -> {
+                    Glide.with(getView()).load(imageItem.photoPath).into(binding.image);
+                    binding.descriptionOfImage.setText(imageItem.description);
+                    binding.nameOfImage.setText(imageItem.name);
+                    binding.save.setOnClickListener(view1 -> {
+                        viewModel.insertImageItem(new ImageItem(
+                                imageItem.id,
+                                binding.nameOfImage.getText().toString(),
+                                binding.descriptionOfImage.getText().toString(),
+                                imageItem.photoPath
+                        ));
+                    });
+                });
+                break;
+        }
     }
 
     private void chosePhoto() {
@@ -77,5 +102,7 @@ public class ImageItemFragment extends Fragment {
                 .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                 .build());
     }
+
+    private static final int ADDING_MODE = -1;
 
 }
