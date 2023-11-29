@@ -30,15 +30,15 @@ public class ImageRepositoryImpl implements ImageRepository {
     @Override
     public LiveData<List<ImageItem>> getImages() {
         return Transformations.map(
-                new MutableLiveData<>(),
+                dao.getImageItemList(),
                 mapper::mapListImageDbModelToListImageItem
         );
     }
 
     @Override
-    public LiveData<ImageItem> getImageItem() {
+    public LiveData<ImageItem> getImageItem(int id) {
         return Transformations.map(
-                new MutableLiveData<>(),
+                dao.getImageItemById(id),
                 mapper::mapImageDbModelToImageItem
         );
     }
@@ -50,4 +50,14 @@ public class ImageRepositoryImpl implements ImageRepository {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe();
     }
+
+    @Override
+    public void deleteImageItem(ImageItem imageItem) {
+        dao.deleteImageItem(mapper.mapImageItemToImageItemDbModel(imageItem))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
+
+
 }

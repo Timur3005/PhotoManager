@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">PhotoManager</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="added_photos">Добавленные фотографии</string>
+    <string name="add_image_element">Добавить фотографию</string>
+    <string name="photo">Фотография</string>
+    <string name="name_photo">Название фотографии</string>
+    <string name="description">Описание</string>
+    <string name="save">Сохранить</string>
 </resources>

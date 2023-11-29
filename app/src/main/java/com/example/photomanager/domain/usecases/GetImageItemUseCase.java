@@ -16,7 +16,7 @@ public class GetImageItemUseCase {
         this.repository = repository;
     }
 
-    public LiveData<ImageItem> getImageItem(){
-        return repository.getImageItem();
+    public LiveData<ImageItem> getImageItem(int id){
+        return repository.getImageItem(id);
     }
 }

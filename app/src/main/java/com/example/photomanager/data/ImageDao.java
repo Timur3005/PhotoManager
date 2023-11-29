@@ -2,6 +2,7 @@ package com.example.photomanager.data;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -14,6 +15,9 @@ import io.reactivex.rxjava3.core.Completable;
 public interface ImageDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable insert(ImageItemDbModel item);
+
+    @Delete
+    Completable deleteImageItem(ImageItemDbModel item);
 
     @Query("SELECT * FROM image_table")
     LiveData<List<ImageItemDbModel>> getImageItemList();
