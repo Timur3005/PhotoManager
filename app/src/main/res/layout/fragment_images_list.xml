@@ -33,7 +33,10 @@
 
     <Button
         android:id="@+id/add_photo"
+        android:elevation="5dp"
+        android:textColor="@color/black"
         android:textSize="20sp"
+        android:textStyle="normal"
         android:text="@string/add_image_element"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

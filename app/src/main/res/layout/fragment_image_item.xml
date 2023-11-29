@@ -57,8 +57,11 @@
     </androidx.core.widget.NestedScrollView>
     <Button
         android:id="@+id/save"
+        android:elevation="5dp"
+        android:textColor="@color/black"
+        android:textStyle="normal"
         android:text="@string/save"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

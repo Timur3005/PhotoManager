@@ -68,6 +68,7 @@ public class ImageItemFragment extends Fragment {
                             binding.nameOfImage.getText().toString(),
                             binding.descriptionOfImage.getText().toString(),
                             photoUri.toString()));
+                    Navigation.findNavController(requireView()).popBackStack();
                 });
                 break;
             default:
@@ -82,6 +83,7 @@ public class ImageItemFragment extends Fragment {
                                 binding.descriptionOfImage.getText().toString(),
                                 imageItem.photoPath
                         ));
+                        Navigation.findNavController(requireView()).popBackStack();
                     });
                 });
                 break;
@@ -109,7 +111,7 @@ public class ImageItemFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                Navigation.findNavController(getView()).popBackStack();
+                Navigation.findNavController(requireView()).popBackStack();
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);

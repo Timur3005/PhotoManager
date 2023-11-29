@@ -108,7 +108,7 @@ public class ImagesListFragment extends Fragment implements ImageItemAdapter.OnI
 
     @Override
     public void onClick(ImageItem imageItem) {
-        Navigation.findNavController(getView())
+        Navigation.findNavController(requireView())
                 .navigate(
                         ImagesListFragmentDirections
                                 .actionImagesListFragmentToImageItemFragment()
